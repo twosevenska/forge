@@ -52,10 +52,16 @@ type sense struct{}
 type hability struct{}
 type action struct{}
 
-// Result describes a an HTTP call response when fetching monsters
-type Result struct {
-	Items       []MonsterEntity
+// BaseResult a generic HTTP call response when fetching data
+type BaseResult struct {
+	Items       []interface{}
 	TotalCount  int64
 	CurrentPage int
 	TotalPages  int
+}
+
+// MonsterResult describes a an HTTP call response when fetching monsters
+type MonsterResult struct {
+	BaseResult
+	Items []MonsterEntity
 }

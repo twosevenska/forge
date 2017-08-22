@@ -33,10 +33,12 @@ func DeleteMonster(c *gin.Context) {
 func FetchMonsters(c *gin.Context) {
 	// TODO: insert DB fetch logic here
 	monsters := t.MonsterResult{
-		Items:       []t.MonsterEntity{},
-		TotalCount:  0,
-		CurrentPage: 1,
-		TotalPages:  1,
+		Items: []t.MonsterEntity{},
+		BaseResult: t.BaseResult{
+			TotalCount:  0,
+			CurrentPage: 1,
+			TotalPages:  1,
+		},
 	}
 
 	c.JSON(http.StatusOK, monsters)
