@@ -7,16 +7,17 @@ import (
 	log "github.com/Sirupsen/logrus"
 	"github.com/fvbock/endless"
 	"github.com/gin-gonic/gin"
+	"github.com/twosevenska/forge/controllers"
 	"github.com/twosevenska/forge/mongo"
 )
 
 // Config is a populated by env variables and Vault
 type Config struct {
 	Debug         bool     `envconfig:"debug" default:"false"`
-	MongoHosts    []string `envconfig:"mongo_hosts" default:"mongo.dev:27017"`
+	MongoHosts    []string `envconfig:"mongo_hosts" default:"127.0.0.1:27017"`
 	MongoDBName   string   `envconfig:"mongo_dbname" default:"forge"`
-	MongoUser     string   `envconfig:"mongo_user" default:"forge"`
-	MongoPassword string   `envconfig:"mongo_password" default:"forge1234"`
+	MongoUser     string   `envconfig:"mongo_user" default:""`
+	MongoPassword string   `envconfig:"mongo_password" default:""`
 }
 
 // ContextParams holds the objects required to initialise the server
@@ -55,10 +56,17 @@ func CreateRouter(contextParams *ContextParams) *gin.Engine {
 		})
 	})
 
-	/*api := r.Group("/forge/api", Auth())
+	api := r.Group("/forge/api", Auth())
 	{
-		//api.GET("/", controllers.INSERT_CONTROLLER_FUNCTION_HERE)
-	}*/
+		api.POST("/monsters", controllers.CreateMonster)
+
+		api.GET("/monsters", controllers.FetchMonsters)
+
+		api.PATCH("/monsters", controllers.UpdateMonster)
+
+		api.DELETE("/monsters", controllers.DeleteMonster)
+
+	}
 
 	if contextParams.Config.Debug {
 		// automatically add routers for net/http/pprof
@@ -91,6 +99,13 @@ func setupDB(c Config) *mongo.Client {
 		log.Fatalf("Failed to connect to MongoDB: %s", err)
 	}
 	return mongoClient
+}
+
+// Auth defines the base authentication logic
+func Auth() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		// TODO: implement authentication logic
+	}
 }
 
 // ContextObjects attaches backend clients to the API context
