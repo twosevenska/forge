@@ -17,31 +17,31 @@ type BaseEntity struct {
 // MonsterEntity describes the general stats of a Monster
 type MonsterEntity struct {
 	BaseEntity
-	Strength            StatPair     `json:"strength"`
-	Dexterity           StatPair     `json:"dexterity"`
-	Constitution        StatPair     `json:"constitution"`
-	Intelligence        StatPair     `json:"intelligence"`
-	Wisdom              StatPair     `json:"wisdom"`
-	Charisma            StatPair     `json:"charisma"`
-	Challenge           int          `json:"challenge"`
-	ArmorClass          int          `json:"armor_class"`
-	HitPoints           int          `json:"hit_points"`
-	Speed               int          `json:"speed"`
-	DamageResistances   []resistance `json:"damage_resistances"`
-	DamageImmunities    []immunity   `json:"damage_immunities"`
-	ConditionImmunities []immunity   `json:"condition_immunities"`
-	Sense               []sense      `json:"sense"`
-	Languages           []string     `json:"languages"`
-	Habilities          []hability   `json:"habilities"`
-	Actions             []action     `json:"actions"`
-	Description         string       `json:"description"`
-	Picture             string       `json:"picture"`
+	Strength            StatPair     `bson:"strength" json:"strength"`
+	Dexterity           StatPair     `bson:"dexterity" json:"dexterity"`
+	Constitution        StatPair     `bson:"constitution" json:"constitution"`
+	Intelligence        StatPair     `bson:"intelligence" json:"intelligence"`
+	Wisdom              StatPair     `bson:"wisdom" json:"wisdom"`
+	Charisma            StatPair     `bson:"charisma" json:"charisma"`
+	Challenge           int          `bson:"challenge" json:"challenge"`
+	ArmorClass          int          `bson:"armor_class" json:"armor_class"`
+	HitPoints           int          `bson:"hit_points" json:"hit_points"`
+	Speed               int          `bson:"speed" json:"speed"`
+	DamageResistances   []resistance `bson:"damage_resistances" json:"damage_resistances"`
+	DamageImmunities    []immunity   `bson:"damage_immunities" json:"damage_immunities"`
+	ConditionImmunities []immunity   `bson:"condition_immunities" json:"condition_immunities"`
+	Sense               []sense      `bson:"sense" json:"sense"`
+	Languages           []string     `bson:"languages" json:"languages"`
+	Habilities          []hability   `bson:"habilities" json:"habilities"`
+	Actions             []action     `bson:"actions" json:"actions"`
+	Description         string       `bson:"description" json:"description"`
+	Picture             string       `bson:"picture" json:"picture"`
 }
 
 // StatPair describes a base attribute (such as strength) and its modifier
 type StatPair struct {
-	Attribute int `json:"attribute"`
-	Modifier  int `json:"modifier"`
+	Attribute int `bson:"attribute" json:"attribute"`
+	Modifier  int `bson:"modifier" json:"modifier"`
 }
 
 // TODO: further specify habilities, resistances, immunities and senses
