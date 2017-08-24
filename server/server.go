@@ -58,11 +58,9 @@ func CreateRouter(contextParams *ContextParams) *gin.Engine {
 
 	api := r.Group("/forge/api", Auth())
 	{
-		api.POST("/monsters", controllers.CreateMonster)
+		api.PUT("/monsters", controllers.UpsertMonster)
 
 		api.GET("/monsters", controllers.FetchMonsters)
-
-		api.PATCH("/monsters", controllers.UpdateMonster)
 
 		api.DELETE("/monsters", controllers.DeleteMonster)
 

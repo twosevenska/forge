@@ -6,21 +6,33 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-
+	uuid "github.com/satori/go.uuid"
+	"github.com/twosevenska/forge/mongo"
 	t "github.com/twosevenska/forge/types"
 )
 
-// CreateMonster adds a monster to DB
-func CreateMonster(c *gin.Context) {
+const (
+	monsterCollection = "critters"
+)
+
+// UpsertMonster adds a monster to DB
+func UpsertMonster(c *gin.Context) {
+	m := c.MustGet("mongo").(mongo.Client)
+
+	e := t.MonsterEntity{
+		BaseEntity: t.BaseEntity{
+			ID:   uuid.NewV4(),
+			Name: "test",
+		},
+	}
+
+	if err := m.UpsertMonster(e, monsterCollection); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
+	}
 	c.JSON(http.StatusCreated, gin.H{
 		"message": "monster created successfully",
-	})
-}
-
-// UpdateMonster adds an existing monster in DB
-func UpdateMonster(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "monster updated successfully",
 	})
 }
 

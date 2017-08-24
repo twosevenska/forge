@@ -3,15 +3,15 @@ package types
 import (
 	"time"
 
-	"gopkg.in/mgo.v2/bson"
+	"github.com/satori/go.uuid"
 )
 
 // BaseEntity describes a generic MongoDB row
 type BaseEntity struct {
-	ID        bson.Binary `bson:"_id,omitempty" json:"id"`
-	Name      string      `bson:"name" json:"name"`
-	CreatedAt time.Time   `bson:"created_at" json:"created_at"`
-	UpdatedAt time.Time   `bson:"updated_at" json:"updated_at"`
+	ID        uuid.UUID `bson:"_id,omitempty" json:"id"`
+	Name      string    `bson:"name" json:"name"`
+	CreatedAt time.Time `bson:"created_at" json:"created_at"`
+	UpdatedAt time.Time `bson:"updated_at" json:"updated_at"`
 }
 
 // MonsterEntity describes the general stats of a Monster
