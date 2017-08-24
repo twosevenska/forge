@@ -6,7 +6,9 @@ import (
 	"time"
 
 	log "github.com/Sirupsen/logrus"
+	t "github.com/twosevenska/forge/types"
 	"gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
 )
 
 //TODO: Check all types in here and try to reorder them as needed
@@ -57,6 +59,20 @@ func Connect(sessionConf SessionConf) (*Client, error) {
 		Database: database,
 		session:  session,
 	}, nil
+}
+
+// UpsertMonster finds a monster and updates it or creates it
+func (c *Client) UpsertMonster(m t.MonsterEntity, collectionName string) error {
+	change := mgo.Change{
+		Update:    bson.M{"$set": m},
+		Upsert:    true,
+		ReturnNew: true,
+	}
+
+	var r t.MonsterEntity
+	_, err := c.Database.C(collectionName).Find(bson.M{"id": m.BaseEntity.ID}).Apply(change, &r)
+
+	return err
 }
 
 func createIndices(s *mgo.Session, sessionConf SessionConf) {
